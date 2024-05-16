@@ -1332,9 +1332,16 @@ def map_read(
     else:
         num_start_clipped_bases = len(seq_data.seq) - alignment.q_en
         num_end_clipped_bases = alignment.q_st
+    
+    # check if seq_data.id is str or bytes
+    if hasattr(seq_data.id, 'decode'):
+        seq_data_id = seq_data.id.decode()
+    else:
+        seq_data_id = seq_data.id
+    # seq_data_id = seq_data.id.decode()
 
     align_info = th.alignInfo(
-        seq_data.id.decode(), bc_subgrp, num_start_clipped_bases,
+        seq_data_id, bc_subgrp, num_start_clipped_bases,
         num_end_clipped_bases, num_ins, num_del, num_match,
         num_aligned - num_match)
 
